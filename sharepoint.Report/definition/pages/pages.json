@@ -3,14 +3,9 @@
   "pageOrder": [
     "3b2afbbe8d64bbd7ab19",
     "0efccb763673b59b0347",
-// <<<<<<< HEAD
     "9642172fb9fec5d230f6",
-    "ef5a472a8a16f5747230"
+    "ef5a472a8a16f5747230",
+    "7231b47c64bf5eaeb2ea"
   ],
-  "activePageName": "9642172fb9fec5d230f6"
-=======
-  //   "ef5a472a8a16f5747230"
-  // ],
-  // "activePageName": "ef5a472a8a16f5747230"
-// >>>>>>> 79c5f887aece0b59722d9d9272fef4de9be24c5c
+  "activePageName": "7231b47c64bf5eaeb2ea"
 }
