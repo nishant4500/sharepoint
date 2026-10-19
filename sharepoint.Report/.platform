@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "sharepoint"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "133eaa5b-9233-49c2-b924-0a50b8b9960b"
+  }
+}
