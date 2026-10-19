@@ -1,0 +1,136 @@
+table Query1
+	lineageTag: 689ab480-e588-4555-bcc2-91de9181f159
+
+	measure 'Total Revenue' = SUM('Query1'[Revenue])
+		lineageTag: cc6b81ab-3fdd-41c3-8a7f-95a38f250b3e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column8
+		dataType: string
+		lineageTag: 81647e22-8695-4325-b18c-aaa996706ab2
+		summarizeBy: none
+		sourceColumn: Column8
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column9
+		dataType: string
+		lineageTag: 659be180-71f9-4b42-8e7a-b039881c82cb
+		summarizeBy: none
+		sourceColumn: Column9
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column10
+		dataType: string
+		lineageTag: 83f6a0bc-404d-4c57-ae99-db04879a72f7
+		summarizeBy: none
+		sourceColumn: Column10
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a59842f2-217a-4f16-9c5a-f3a511d0292a
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 6fc50e9b-1c7b-4d21-b50a-b908c572a97f
+			defaultHierarchy: LocalDateTable_84980fa2-ca31-4d35-bf6b-9a9550671cb4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Sales Rep'
+		dataType: string
+		lineageTag: a210b690-fcf2-47c0-a775-fb380e16eda3
+		summarizeBy: none
+		sourceColumn: Sales Rep
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 2f523316-dd31-4703-a5d0-58018fe8bd08
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 25bf819b-e485-4e8f-82d3-14b14dac35cd
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales Data'
+		dataType: int64
+		formatString: 0
+		lineageTag: 247ead28-e242-4d0c-86fe-482f4c0f34f7
+		summarizeBy: sum
+		sourceColumn: Sales Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 67bc50b4-eec0-454d-a691-a894e3f4771c
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Units Sold'
+		dataType: int64
+		formatString: 0
+		lineageTag: 478c0c3c-b045-415c-b84e-28e27c66e661
+		summarizeBy: sum
+		sourceColumn: Units Sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Price'
+		dataType: double
+		lineageTag: 513b172e-daa0-49b1-b19d-86663e35a5bd
+		summarizeBy: sum
+		sourceColumn: Unit Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Revenue
+		dataType: double
+		lineageTag: bd871b88-a56b-417e-bac3-bd1d5488ced4
+		summarizeBy: sum
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Query1 = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://navikenzcom-my.sharepoint.com/personal/nishant_dwivedi_navikenz_com", [ApiVersion = 15]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Name] = "Sales Data.xlsx")),
+				    #"Sales Data xlsx_https://navikenzcom-my sharepoint com/personal/nishant_dwivedi_navikenz_com/Documents/Microsoft Teams Chat Files/" = #"Filtered Rows"{[Name="Sales Data.xlsx",#"Folder Path"="https://navikenzcom-my.sharepoint.com/personal/nishant_dwivedi_navikenz_com/Documents/Microsoft Teams Chat Files/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Sales Data xlsx_https://navikenzcom-my sharepoint com/personal/nishant_dwivedi_navikenz_com/Documents/Microsoft Teams Chat Files/"),
+				    Data_Sheet = #"Imported Excel Workbook"{[Item="Data",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Data_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date", type date}, {"Sales Rep", type text}, {"Region", type text}, {"Product", type text}, {"Sales Data", Int64.Type}, {"Category", type text}, {"Units Sold", Int64.Type}, {"Column8", type any}, {"Column9", type any}, {"Column10", type any}, {"Unit Price", type number}, {"Revenue", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
